@@ -1,0 +1,27 @@
+server:
+
+  instance_type: f1-micro
+
+  volumes:
+
+    - device: boot
+
+      size_gb: 10
+
+      type: ext4
+
+      mount: /
+
+    - device: data
+
+      size_gb: 100
+
+      type: xfs
+
+      mount: /data
+
+  users:
+
+    - login: user1
+
+      ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8V+mp1ycP0kFJT5BCaCCESRdfj0c9zvywVoucWHrD2qic0uvfcPNGe6oIKKBgSOQplkv+pF/sIcRKSMUozGXxEmdKu/uWspL8/Qt27vvUiFOPLJ+ShvYQopBRfJ5mu5/KSonuSKoGLQLbMRT58WqQbGU7ZSXUlfahDqy2Fw+BFGVFH3hL1pr74f4MYziTe+0sZJDTnv2CnWaj2eWLFTvDWEmAUnnbvcYXFe2IRe2J52LmAqXtbdw4l8flbw9/LScY4eIfLGFNlhcbN+6nzNgDvZOozvhEKUOpAMtu67zaxT83M+xH5j1Eczr1TVIGde29ANw/q8lrbcauJUwegoHf user1@localhost
