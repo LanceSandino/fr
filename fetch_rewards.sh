@@ -65,9 +65,16 @@ gcloud deployment-manager deployments create $DEPLOY_NAME --config vm.yaml
 EXT_INSTANCE_IP=$(gcloud compute instances list|grep fetch-rewards | awk '{print $(NF-1)}')
 
 # run disk hack (need to format and initialize disk since we just created it.... real use-case we probs wouldn't have to, or do this a better way)
-echo "\n\nwaiting for VM to finish initializing..."
-sleep 30
-ssh ${G_SSH_USER}@${EXT_INSTANCE_IP} < disk_hack.sh
+echo "\n\nwaiting for VM to finish initializing... (60 sec)"
+sleep 60
+echo "running disk hack"
+ssh ${G_SSH_USER}@${EXT_INSTANCE_IP} < disk_hack.sh; ERR=$?
+if [ "$ERR" != "0" ]; then
+	echo "\n\nuh-oh... we couldn't connect... hopefully you didn't get this message."
+	echo "trying again :)"
+	echo "running disk hack #1"
+	ssh ${G_SSH_USER}@${EXT_INSTANCE_IP} < disk_hack.sh;
+fi
 
 # ask nicely if user wants to connect to play around in VM
 read -p "Would you like to connect to your newly created VM? [yes/no]" prompt
