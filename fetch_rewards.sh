@@ -70,20 +70,20 @@ echo ""
 echo "waiting for VM to finish initializing... (60 sec)"
 sleep 60
 echo "running disk hack"
-ssh ${G_SSH_USER}@${EXT_INSTANCE_IP} < disk_hack.sh; ERR=$?
+ssh -i id_rsa ${G_SSH_USER}@${EXT_INSTANCE_IP} < disk_hack.sh; ERR=$?
 if [ "$ERR" != "0" ]; then
 	echo ""
 	echo "uh-oh... we couldn't connect... hopefully you didn't get this message."
 	echo "trying again :)"
 	echo "running disk hack #1"
-	ssh ${G_SSH_USER}@${EXT_INSTANCE_IP} < disk_hack.sh;
+	ssh -i id_rsa ${G_SSH_USER}@${EXT_INSTANCE_IP} < disk_hack.sh;
 fi
 
 # ask nicely if user wants to connect to play around in VM
 read -p "Would you like to connect to your newly created VM? [yes/no]" prompt
 case $prompt in
-        [Yy]* ) ssh ${G_SSH_USER}@${EXT_INSTANCE_IP};;
-        * ) echo "To connect at a later time, use the following command"; echo ""; echo "'ssh ${G_SSH_USER}@${EXT_INSTANCE_IP}'";;
+        [Yy]* ) ssh -i id_rsa ${G_SSH_USER}@${EXT_INSTANCE_IP};;
+        * ) echo "To connect at a later time, use the following command"; echo ""; echo "'ssh -i id_rsa ${G_SSH_USER}@${EXT_INSTANCE_IP}'";;
 esac
 
 # let's clean up
