@@ -7,12 +7,14 @@ DISK=$(sudo lsblk|grep 100|awk '{print $1}')
 sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/$DISK
 sudo mkdir -p /data
 sudo mount -o discard,defaults /dev/$DISK /data
+#oops forgot to make it xfs -- don't forget to delete above!
+apt install xfsprogs -y && umount /data && mkfs.xfs -f -L XFS -b size=1024 /dev/$DISK && mount /dev/$DISK /data
 echo ""
 echo "----------- DISKS -----------"
 echo "running 'df -h'"
-df -h
+df -Th
 echo ""
 echo "-----------------------------"
 echo "partitions you care about"
 echo ""
-df -h |grep sd
+df -Th |grep sd
