@@ -54,9 +54,9 @@ yq w -i vm.yaml 'resources.[*].properties.disks[1].initializeParams.diskSizeGb' 
 yq w -i vm.yaml 'resources.[*].properties.disks[1].initializeParams.diskName' $DISK2_NAME
 yq w -i vm.yaml 'resources.[*].properties.networkInterfaces.[0].network' $NETWORK_URL
 
-##echo "adding repo key to project"
-##echo "${G_EXISTING_KEYS}\n${G_SSH_USER}:${G_SSH_KEY}" > new_ssh_keys.txt
-##gcloud compute project-info add-metadata --metadata-from-file ssh-keys=new_ssh_keys.txt
+echo "adding repo key to project"
+echo "${G_EXISTING_KEYS}\n${G_SSH_USER}:${G_SSH_KEY}" > new_ssh_keys.txt
+gcloud compute project-info add-metadata --metadata-from-file ssh-keys=new_ssh_keys.txt
 
 # create deployment using 'vm.yaml'
 gcloud deployment-manager deployments create $DEPLOY_NAME --config vm.yaml
